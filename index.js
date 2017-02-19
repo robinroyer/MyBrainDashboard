@@ -17,7 +17,6 @@ var dirPath = './Data/';
 
 // To store all the data
 let data = [];
-console.log(data);
 
 fs.readdir(dirPath, (err, filesPath) => {
     if (err) throw err;
@@ -48,19 +47,19 @@ function getUserIds() {
 
 function getTags() {
 	tags = [];
-	data.forEach(element => { _.union(tags, element.tags); });
+	data.forEach(element => { tags = _.union(tags, element.tags); });
 	return tags;
 }
 
 function getUserData(id) {
-	const i = _.findIndex(users, element => { return element.user_id == id; });
+	const i = _.findIndex(data, element => { return element.user_id === id; });
 	if (i === -1) return [];
 	return data[i].data;
 }
 
 function getTagData(tag) {
 	return data.map(element => {
-		if (element.tags.includes(tags)) {
+		if (element.tags.includes(tag)) {
 			return element.data;
 		}
 	});
@@ -85,24 +84,23 @@ app.get('/', (req, res) => {
 
 // ______________________________________Gets tags and user id
 app.get('/users', (req, res) => {
-	res.json(data);
+	res.json(getUserIds());
 });
 
 app.get('/tags', (req, res) => {
-	res.json(data);
+	res.json(getTags());
 });
 
 //________________________________________Gets The data
-app.get('data/users/:id', (req, res) => {
-	res.json(data);
+app.get('/data/users/:id', (req, res) => {
+	res.json(getUserData(req.params.id));
 });
 
-app.get('data/tags/:id', (req, res) => {
-	res.json(data);
-	// console.log(req.params.id));
+app.get('/data/tags/:tag', (req, res) => {
+	res.json(getTagData(req.params.tag));
 });
 
 // Start server
 app.listen(8080, () => {
-	console.log('Starting application on port' + 8080);
+	console.log('Starting application on port : ' + 8080);
 });
