@@ -8,6 +8,10 @@ var path 	= require('path');
 var async = require('async');
 
 
+/*
+ * DATA
+ */
+
 // TODO: add a DB instead
 var dirPath = './Data/';
 
@@ -32,3 +36,43 @@ fs.readdir(dirPath, (err, filesPath) => {
     });
 });
 
+
+/*
+ * APPLICATION
+ */
+
+var app = express();
+app.use(express.static('public'));
+
+app.get('/', (req, res) => {
+	res.sendFile(path.join(__dirname, 'public', 'home.html'));
+});
+
+
+/*
+ * API ROUTES
+ */
+
+// ______________________________________Gets tags and user id
+app.get('/users', (req, res) => {
+	res.json(data);
+});
+
+app.get('/tags', (req, res) => {
+	res.json(data);
+});
+
+//________________________________________Gets The data
+app.get('data/users/:id', (req, res) => {
+	res.json(data);
+});
+
+app.get('data/tags/:id', (req, res) => {
+	res.json(data);
+	// console.log(req.params.id));
+});
+
+// Start server
+app.listen(8080, () => {
+	console.log('Starting application on port' + 8080);
+});
