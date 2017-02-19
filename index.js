@@ -1,12 +1,12 @@
 /*
- * Modules
+ * IMPORT
  */
 
 var express	= require('express');
 var fs 		= require('fs');
 var path 	= require('path');
 var async = require('async');
-
+var _ = require('lodash');
 
 /*
  * DATA
@@ -35,6 +35,36 @@ fs.readdir(dirPath, (err, filesPath) => {
     	});
     });
 });
+
+/**
+ * MODULES
+ */
+
+function getUserIds() {
+	users = [];
+	data.forEach(element => { users.push(element.user_id); });
+	return users;
+}
+
+function getTags() {
+	tags = [];
+	data.forEach(element => { _.union(tags, element.tags); });
+	return tags;
+}
+
+function getUserData(id) {
+	const i = _.findIndex(users, element => { return element.user_id == id; });
+	if (i === -1) return [];
+	return data[i].data;
+}
+
+function getTagData(tag) {
+	return data.map(element => {
+		if (element.tags.includes(tags)) {
+			return element.data;
+		}
+	});
+}
 
 
 /*
