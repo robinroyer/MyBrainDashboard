@@ -43,7 +43,7 @@ fs.readdir(dirPath, (err, filesPath) => {
 function getUserIds() {
 	users = [];
 	data.forEach(element => { users.push(element.user_id); });
-	return users;
+	return _.uniq(users);
 }
 
 function getTags() {
