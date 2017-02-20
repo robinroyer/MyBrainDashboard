@@ -58,7 +58,7 @@ class App extends Component {
 
 	getDataFromTags(tags) {
 		if (tags.length === 0) {
-			alert('please select somes tags')
+			alert('please select some tags')
 			return;
 		}
 

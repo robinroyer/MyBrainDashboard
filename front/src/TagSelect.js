@@ -41,4 +41,8 @@ class TagSelect extends Component {
   }
 }
 
+TagSelect.propTypes = {
+	tags: React.PropTypes.array,
+};
+
 export default TagSelect;

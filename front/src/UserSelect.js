@@ -42,4 +42,8 @@ class UserSelect extends Component {
   }
 }
 
+UserSelect.propTypes = {
+	users: React.PropTypes.array,
+};
+
 export default UserSelect;
