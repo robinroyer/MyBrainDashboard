@@ -1,6 +1,6 @@
 # MyBrainDashboard
-my brain tech test
-
+React and node.js quick dashboard
+![alt tag](https://github.com/robinroyer/MyBrainDashboard/blob/master/screen.png)
 
 #### Launch
 
