@@ -13,7 +13,7 @@ var cors = require('cors');
  * DATA
  */
 
-// TODO: add a DB instead
+// TODO: add a DB instead(mongo)
 var dirPath = './Data/';
 
 // To store all the data
@@ -40,18 +40,32 @@ fs.readdir(dirPath, (err, filesPath) => {
  * MODULES
  */
 
+ /**
+   * Get all users ids from our data
+   *
+   */
 function getUserIds() {
 	users = [];
 	data.forEach(element => { users.push(element.user_id); });
 	return _.uniq(users);
 }
 
+ /**
+   * Get all the tags from our data
+   *
+   */
 function getTags() {
 	tags = [];
 	data.forEach(element => { tags = _.union(tags, element.tags); });
 	return tags;
 }
 
+
+ /**
+   * Get all the data from one user
+   *
+   * @param {String} id - The ID of the user.
+   */
 function getUserData(id) {
 	return _.compact(data.map(element => {
 		if (element.user_id === id) {
@@ -60,6 +74,11 @@ function getUserData(id) {
 	}));
 }
 
+ /**
+   * Get all the data corresponding to tags in the url query
+   *
+   * @param {Object} query - the url query to search for tags
+   */
 function getTagData(query) {
 
 	const { filters } = query;
@@ -78,6 +97,11 @@ function getTagData(query) {
  * HELPERS
  */
 
+ /**
+   * Helper to generate x,y point
+   *
+   * @param {Number} val - array of y value
+   */
 function generateDataPoints(val){
 	return val.map((element, index) => {
 		return {x: index, y: element};
@@ -88,14 +112,11 @@ function generateDataPoints(val){
 /*
  * APPLICATION
  */
-
 var app = express();
-app.use(express.static('public'));
 
 app.get('/', cors(), (req, res) => {
 	res.json({statut: 'ok'});
 });
-
 
 /*
  * API ROUTES
