@@ -7,6 +7,7 @@ var fs 		= require('fs');
 var path 	= require('path');
 var async = require('async');
 var _ = require('lodash');
+var cors = require('cors');
 
 /*
  * DATA
@@ -73,7 +74,7 @@ function getTagData(tag) {
 var app = express();
 app.use(express.static('public'));
 
-app.get('/', (req, res) => {
+app.get('/', cors(), (req, res) => {
 	res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 
@@ -83,20 +84,20 @@ app.get('/', (req, res) => {
  */
 
 // ______________________________________Gets tags and user id
-app.get('/users', (req, res) => {
+app.get('/users', cors(), (req, res) => {
 	res.json(getUserIds());
 });
 
-app.get('/tags', (req, res) => {
+app.get('/tags', cors(), (req, res) => {
 	res.json(getTags());
 });
 
 //________________________________________Gets The data
-app.get('/data/users/:id', (req, res) => {
+app.get('/data/users/:id', cors(), (req, res) => {
 	res.json(getUserData(req.params.id));
 });
 
-app.get('/data/tags/:tag', (req, res) => {
+app.get('/data/tags/:tag', cors(), (req, res) => {
 	res.json(getTagData(req.params.tag));
 });
 
