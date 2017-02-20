@@ -53,17 +53,35 @@ function getTags() {
 }
 
 function getUserData(id) {
-	const i = _.findIndex(data, element => { return element.user_id === id; });
-	if (i === -1) return [];
-	return data[i].data;
+	return _.compact(data.map(element => {
+		if (element.user_id === id) {
+			return generateDataPoints(element.data);
+		}
+	}));
 }
 
-function getTagData(tag) {
-	return data.map(element => {
-		if (element.tags.includes(tag)) {
-			return element.data;
+function getTagData(query) {
+
+	const { filters } = query;
+	if (filters === null) return [];
+	const tags = filters.split(",");
+	if (tags === null) return [];
+
+	return _.compact(data.map(element => {
+		if (_.intersection(element.tags, tags).length !== 0) {
+			return generateDataPoints(element.data);
 		}
-	});
+	}));
+}
+
+/*
+ * HELPERS
+ */
+
+function generateDataPoints(val){
+	return val.map((element, index) => {
+		return {x: index, y: element};
+	})
 }
 
 
@@ -75,7 +93,7 @@ var app = express();
 app.use(express.static('public'));
 
 app.get('/', cors(), (req, res) => {
-	res.sendFile(path.join(__dirname, 'public', 'home.html'));
+	res.json({statut: 'ok'});
 });
 
 
@@ -97,8 +115,8 @@ app.get('/data/users/:id', cors(), (req, res) => {
 	res.json(getUserData(req.params.id));
 });
 
-app.get('/data/tags/:tag', cors(), (req, res) => {
-	res.json(getTagData(req.params.tag));
+app.get('/data/tags?', cors(), (req, res) => {
+	res.json(getTagData(req.query));
 });
 
 // Start server

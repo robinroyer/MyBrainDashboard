@@ -12,9 +12,7 @@ class UserSelect extends Component {
 		this._onSelectChange = this._onSelectChange.bind(this);
 	}
 
-	_onSelectChange(value) {
-		this.setState({ userSelected: value });
-	}
+	_onSelectChange(value) { this.setState({ userSelected: value }); }
 
   render() {
   	const { users } = this.props;

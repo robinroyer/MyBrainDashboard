@@ -12,6 +12,7 @@
     "react-bootstrap": "^0.30.7",
     "react-dom": "^15.4.2",
     "react-selectlist": "^1.1.11",
+    "recharts": "^0.20.8",
     "whatwg-fetch": "^2.0.2"
   },
   "scripts": {

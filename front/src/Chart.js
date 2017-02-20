@@ -1,34 +1,22 @@
 import React, { Component } from 'react';
-import rd3 from 'rd3';
+import {ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, Legend} from 'recharts';
 
 class Chart extends Component {
   render() {
-	const LineChart = rd3.LineChart;
-	const lineData = [
-      { 
-        values: [ { x: 0, y: 20 }, { x: 1, y: 30 }, { x: 2, y: 10 }, { x: 3, y: 5 }, { x: 4, y: 8 }, { x: 5, y: 15 }, { x: 6, y: 10 } ],
-      },
-      {
-        values : [ { x: 0, y: 8 }, { x: 1, y: 5 }, { x: 2, y: 20 }, { x: 3, y: 12 }, { x: 4, y: 4 }, { x: 5, y: 6 }, { x: 6, y: 2 } ]
-      },
-      {
-        values: [ { x: 0, y: 0 }, { x: 1, y: 5 }, { x: 2, y: 8 }, { x: 3, y: 2 }, { x: 4, y: 6 }, { x: 5, y: 4 }, { x: 6, y: 2 } ]
-      } 
-    ];
+    const { data, label } = this.props;
     return (
       <div>
-	 	   <LineChart
-	        legend={true}
-	        data={lineData}
-	        width='100%'
-	        height={400}
-	        viewBoxObject={{
-	          x: 0,
-	          y: 0,
-	          width: 500,
-	          height: 400
-	        }}
-	      />
+	 	   <ScatterChart width={600} height={400} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <XAxis dataKey={'x'} name='' unit=''/>
+        <YAxis dataKey={'y'} name='' unit=''/>
+        <ZAxis range={[100]}/>
+        <CartesianGrid />
+        <Tooltip cursor={{strokeDasharray: '1 1'}}/>
+        <Legend/>
+        {data && data.map((x,i) => 
+          <Scatter key={i+1} name={label} data={x} fill={"#"+((1<<24)*Math.random()|0).toString(16)} line/>
+        )}
+      </ScatterChart>
       </div>
     );
   }

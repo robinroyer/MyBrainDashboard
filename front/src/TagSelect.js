@@ -12,10 +12,7 @@ class TagSelect extends Component {
 		this._onSelectChange = this._onSelectChange.bind(this);
 	}	
 
-	_onSelectChange(value) {
-		console.log(value);
-		this.setState({ tagsSelected: value });
-	}
+	_onSelectChange(value) { this.setState({ tagsSelected: value }); }
 
   render() {
   	const { tags } = this.props;
